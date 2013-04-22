@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="gbk" ?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:webx2-services="http://www.alibaba.com/schema/webx2-services"
+	xmlns:services="http://www.alibaba.com/schema/services"
+	xmlns:request-contexts="http://www.alibaba.com/schema/services/request-contexts"
+	xmlns:basic-interceptors="http://www.alibaba.com/schema/services/request-contexts/basic/interceptors"
+	xmlns:parser-filters="http://www.alibaba.com/schema/services/request-contexts/parser/filters"
+	xmlns:session-encoders="http://www.alibaba.com/schema/services/request-contexts/session/encoders"
+	xmlns:model-encoders="http://www.alibaba.com/schema/services/request-contexts/session/model-encoders"
+	xmlns:session-idgens="http://www.alibaba.com/schema/services/request-contexts/session/idgens"
+	xmlns:session-stores="http://www.alibaba.com/schema/services/request-contexts/session/stores"
+	xmlns:session-interceptors="http://www.alibaba.com/schema/services/request-contexts/session/interceptors"
+	xmlns:ml-adapters="http://www.alibaba.com/schema/services/module-loader/adapters"
+	xmlns:ml-factories="http://www.alibaba.com/schema/services/module-loader/factories"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+        http://www.alibaba.com/schema/services http://localhost:8080/schema/services.xsd
+        http://www.alibaba.com/schema/services/request-contexts http://localhost:8080/schema/services-request-contexts.xsd
+        http://www.alibaba.com/schema/services/request-contexts/basic/interceptors http://localhost:8080/schema/services-request-contexts-basic-interceptors.xsd
+        http://www.alibaba.com/schema/services/request-contexts/parser/filters http://localhost:8080/schema/services-request-contexts-parser-filters.xsd
+        http://www.alibaba.com/schema/services/request-contexts/session/encoders http://localhost:8080/schema/services-request-contexts-session-encoders.xsd
+        http://www.alibaba.com/schema/services/request-contexts/session/idgens http://localhost:8080/schema/services-request-contexts-session-idgens.xsd
+        http://www.alibaba.com/schema/services/request-contexts/session/stores http://localhost:8080/schema/services-request-contexts-session-stores.xsd
+        http://www.alibaba.com/schema/services/request-contexts/session/model-encoders http://localhost:8080/schema/services-request-contexts-session-model-encoders.xsd
+        http://www.alibaba.com/schema/services/request-contexts/session/interceptors http://localhost:8080/schema/services-request-contexts-session-interceptors.xsd
+        http://www.alibaba.com/schema/services/module-loader/adapters http://localhost:8080/schema/services-module-loader-adapters.xsd
+        http://www.alibaba.com/schema/services/module-loader/factories http://localhost:8080/schema/services-module-loader-factories.xsd
+        http://www.alibaba.com/schema/webx2-services http://localhost:8080/schema/www.alibaba.com/schema/webx2-services.xsd
+        http://www.springframework.org/schema/beans http://localhost:8080/schema/www.springframework.org/schema/beans/spring-beans.xsd
+    ">
+
+	<!-- 支持替换。 -->
+	<services:property-placeholder>
+		<services:property key="component">mediacodec
+		</services:property>
+	</services:property-placeholder>
+
+	<!-- 共享配置。 -->
+	<beans:import resource="mediacodec/webx-root.xml" />
+
+	<!-- 异常管道。 -->
+	<beans:import resource="mediacodec/pipeline-exception.xml" />
+
+	<!-- 资源装载。 -->
+	<beans:import resource="classpath:resources.xml" />
+
+	<!-- URI生成。 -->
+	<beans:import resource="classpath:uris.xml" />
+
+	<!-- 表单验证。 -->
+	<beans:import resource="form.xml" />
+
+	<!-- 配置 -->
+	<beans:import resource="classpath:mediacodec_retry_config.xml" />
+	<beans:import resource="classpath:mediacodec-core-spring.xml" />
+	<beans:import resource="classpath:retry-convert-spring.xml" />
+	<beans:import resource="classpath:mediacodec-notify.xml" />
+	<beans:import resource="classpath:mediacode-job-spring.xml" />
+
+
+
+	<!-- 综合设置。 -->
+	<services:webx-configuration>
+		<!-- 默认将productionMode设为true，建议在jetty插件中设置-DproductionMode=false。 -->
+		<services:productionMode>true</services:productionMode>
+		<services:components defaultComponent="mediacodec" />
+	</services:webx-configuration>
+
+	<!-- 设置request/response/session。 -->
+	<services:request-contexts
+		xmlns="http://www.alibaba.com/schema/services/request-contexts">
+		<basic />
+		<buffered />
+		<lazy-commit />
+		<parser />
+		<set-locale defaultLocale="zh_CN" defaultCharset="GBK" />
+	</services:request-contexts>
+
+	<!-- 支持上传文件。 -->
+	<services:upload sizeMax="10000M" />
+
+	<!-- 将beans暴露给模板。这里定义的tools可被所有components之间共享。 -->
+	<services:pull xmlns="http://www.alibaba.com/schema/services/pull/factories">
+		<utils />
+		<page-tool />
+		<control-tool />
+		<uris-tool />
+		<bean-tool id="calendarUtil" class="com.taobao.util.CalendarUtil"
+			scope="request" />
+		<bean-tool id="securityUtil" class="com.taobao.security.util.SecurityUtilLib"
+			scope="global" />
+
+	</services:pull>
+
+	<services:module-loader />
+
+</beans:beans>

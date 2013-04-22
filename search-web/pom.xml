@@ -1,0 +1,249 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.taobao.filesearch</groupId>
+		<artifactId>filesearch</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<groupId>com.taobao.filesearch</groupId>
+	<artifactId>search-web</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name>search-web</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<java.version>1.6</java.version>
+		<java.encoding>GBK</java.encoding>
+		<webx3-version>3.0.3</webx3-version>
+		<warExplodedDirectory>target/exploded/${name}.war</warExplodedDirectory>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>dev</build.profile.id>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<!-- self dependency -->
+		<dependency>
+			<groupId>com.taobao.filesearch</groupId>
+			<artifactId>filesearch-client</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.taobao.media</groupId>
+			<artifactId>commons-utils</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
+		<!-- tools dependency -->
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-core</artifactId>
+			<version>4.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-dataimporthandler</artifactId>
+			<version>4.1.0</version>
+		</dependency>
+		<!-- third parties end <dependency> <groupId>com.taobao.media</groupId> 
+			<artifactId>commons-web</artifactId> </dependency> -->
+		<!--for log -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<!--for log -->
+
+           <dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>0.2.11</version>
+			</dependency>
+			<dependency>
+                 <groupId>com.alibaba.external</groupId>
+		         <artifactId>jdbc.oracle</artifactId>
+		         <version>11.2.0.3</version>
+            </dependency>
+			<dependency>
+				<groupId>com.alibaba.external</groupId>
+				<artifactId>jdbc.mysql.mysql-connector</artifactId>
+				<version>5.1.12</version>
+ 			</dependency>
+
+		<!-- for test <dependency> <groupId>commons-chain</groupId> <artifactId>commons-chain</artifactId> 
+			<version>1.1</version> </dependency> -->
+		<!-- ======================================== -->
+		<!-- WEBX -->
+		<!-- ======================================== -->
+		<dependency>
+			<groupId>com.alibaba.citrus</groupId>
+			<artifactId>citrus-webx-all-in-one</artifactId>
+			<version>${webx3-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.taobao.security</groupId>
+			<artifactId>security</artifactId>
+			<version>2.0-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.j2ee</groupId>
+					<artifactId>j2ee</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.mina</groupId>
+			<artifactId>mina-core</artifactId>
+			<version>1.1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.taobao.tbsession</groupId>
+			<artifactId>tbsession</artifactId>
+			<version>1.3.8.1</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>com.taobao.tair</groupId> <artifactId>tair-client</artifactId> 
+			</dependency> <dependency> <groupId>com.taobao.common.tair</groupId> <artifactId>common-tair</artifactId> 
+			</dependency> -->
+		<!-- ======================================== -->
+		<!-- tools and thrid lib -->
+		<!-- ======================================== -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.taobao.hsf</groupId>
+			<artifactId>hsfunit</artifactId>
+			<version>1.0.2-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.taobao.test</groupId>
+			<artifactId>itest</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.taobao.test</groupId>
+			<artifactId>smart</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>search-web</finalName>
+		<filters>
+			<filter>${user.home}/antx.properties</filter>
+		</filters>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<webappDirectory>${warExplodedDirectory}</webappDirectory>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>${basedir}/src/main/webapp/WEB-INF</directory>
+							<includes>
+								<include>*.xml</include>
+							</includes>
+							<targetPath>WEB-INF</targetPath>
+						</resource>
+					</webResources>
+					<attachClasses>true</attachClasses>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.0.2</version>
+				<configuration>
+					<container>
+						<containerId>jboss42x</containerId>
+						<zipUrlInstaller>
+							<url>http://10.1.5.11/magazine/jboss-4.2.2.GA-HSF.zip</url>
+							<installDir>${installDir}</installDir>
+						</zipUrlInstaller>
+					</container>
+					<configuration>
+						<home>${project.build.directory}/jboss42x/container</home>
+						<properties>
+							<cargo.servlet.port>80</cargo.servlet.port>
+							<cargo.jvmargs><![CDATA[
+                            -Xms128m -Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8787 -Djava.compiler=NONE
+                            ]]>
+							</cargo.jvmargs>
+						</properties>
+						<deployables>
+							<deployable>
+								<location>${warExplodedDirectory}</location>
+							</deployable>
+						</deployables>
+					</configuration>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.10</version>
+				<configuration>
+				    <webApp>${basedir}/search-web/target/search-web.war</webApp>
+				</configuration> 	
+			</plugin>
+		</plugins>
+	</build>
+</project>
